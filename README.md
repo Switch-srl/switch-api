@@ -1,30 +1,115 @@
-# Switch API
+# SWITCH - Street WITCHer API
 
-This repository contains the OpenAPI specification file for the Switch API.
+The **SWITCH API** gives mobility and logistics companies access to powerful forecasting, optimization, and simulation tools — available via simple, RESTful endpoints.
 
-## Interactive Documentation
+It powers both the **SWITCH AI Agent** and external applications via secure, authenticated API calls. You can plug directly into SWITCH's AI models to forecast demand, rebalance your fleet, solve routing problems, and track ingestion workflows.
 
-You can access and interact with the API documentation through the following links:
+---
 
-* **Swagger UI**: [api.getswitch.io](https://api.getswitch.io)
-* **ReDoc**: [api.getswitch.io/redoc](https://api.getswitch.io/redoc)
+## 🔑 Authentication
 
-These interactive interfaces provide a convenient way to explore API endpoints, view request and response examples, and test API calls directly in your browser.
+All endpoints require authentication via **Bearer token**.
 
-## Usage
+1. Use the `/auth/login` endpoint to obtain your access token.
+2. Pass the token in the `Authorization` header of each request:
 
-You can use the `openapi.json` file in this repository to:
+Authorization: Bearer <your_token_here>
 
-* Generate client libraries in various programming languages.
-* Import the API definition into testing tools like Postman or Insomnia.
-* Power other tools that support the OpenAPI specification.
+To manage your credentials, visit `/auth/api-keys`.
 
-## Contacts
+---
 
-For any questions or further information about the Switch API or any other Switch service, please visit our website:
+## 📊 Key Capabilities
 
-* **[getswitch.io](https://getswitch.io)**
+Here’s what you can do with the API:
 
-## Contributing
+- **Forecast demand** across spatial zones and time ranges
+- **Analyze fleet imbalance** and identify oversupplied/undersupplied areas
+- **Get rebalancing suggestions** (e.g. pick-ups, drop-offs, battery swaps)
+- **Run routing optimization** for your ops teams
+- **Ingest operational data** from your system (JSON or CSV)
+- **Monitor ingestion + forecasting pipeline health**
 
-Contributions to improve the Switch API specification are welcome. If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+---
+
+## 📘 Main Endpoints
+
+### 🧠 Forecasting
+- `POST /forecast/`  
+  Get predicted demand with default parameters.
+
+- `POST /forecast/{forecast_type}`  
+  Use a specific forecast model (`demand`, `unsatisfied-demand`, etc.).
+
+### 📦 Operations
+- `POST /operations/imbalance`  
+  Returns demand-supply mismatches across zones.
+
+- `POST /operations/rebalance`  
+  Suggests rebalancing actions, optionally considering battery thresholds.
+
+- `POST /operations/routing`  
+  Solves routing problems based on vehicles, tasks, and constraints.
+
+### ⏺ Ingestion
+- `POST /ingestion/ingest`  
+  Ingest structured JSON payloads.
+
+- `POST /ingestion/ingest/bulk`  
+  Ingest batch data from CSV or JSON files.
+
+### 🩺 Monitoring
+- `GET /monitoring/`  
+  Overview of system processes (ingestion, forecasting).
+
+- `GET /monitoring/ingestion`  
+  Check ingestion status and progress.
+
+- `GET /monitoring/forecast`  
+  View forecast job status and metadata.
+
+---
+
+## 🧭 Forecast Models
+
+The following forecast types are currently supported:
+
+- `demand`: standard expected demand forecast by zone/time
+- `unsatisfied-demand`: estimated missed demand based on availability constraints
+
+All forecasts return time series across user-defined geographic zones.
+
+---
+
+## 🧩 How This API Fits In
+
+SWITCH developed this API to serve as a plug-in intelligence layer across fleet management platforms. It is:
+
+- Modular and **tool-agnostic**
+- Secure and **production-ready**
+- Designed to scale from a few vehicles to tens of thousands
+
+You can integrate it into:
+- In-house mobility dashboards
+- Partner fleet management tools
+- External agentic AI interfaces (chat, voice, API)
+
+---
+
+## 🛠 Docs & Tools
+
+- API Docs: [https://api.getswitch.io/redoc](https://api.getswitch.io/redoc)
+- Live base URL: `https://api.getswitch.io`
+- OpenAPI spec (download): [openapi.json](https://api.getswitch.io/openapi.json)
+
+---
+
+## 📮 Contact & Support
+
+Want to test it? Need access?
+
+- 📩 [https://getswitch.io/contacts/](https://getswitch.io/contacts/)
+
+---
+
+© SWITCH SRL – All rights reserved.
